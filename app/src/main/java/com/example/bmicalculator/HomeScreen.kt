@@ -11,11 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -85,7 +81,7 @@ fun HomeScreen(navController: NavController) {
 
     val items = listOf(
         HomeItem("BMI Calculator", Icons.Default.Home, Screen.BMICalculator.route),
-        HomeItem("BMI Category Guide", Icons.Default.Info, Screen.BMICategory.route),
+        HomeItem("Category Guide", Icons.Default.Info, Screen.BMICategory.route),
         HomeItem("Profile", Icons.Default.Person, Screen.Profile.route),
         HomeItem("About Us", Icons.Default.Home, Screen.About.route)
     )
@@ -98,33 +94,56 @@ fun HomeScreen(navController: NavController) {
         }
     ) { padding ->
 
+
         Column(
             modifier = Modifier
                 .padding(padding)
+                .fillMaxSize()
         ) {
-            items.chunked(2).forEach { rowItems ->
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    rowItems.forEach { item ->
-                        HomeCard(
-                            item = item,
-                            onClick = {
-                                navController.navigate(item.route)
-                            }
-                        )
+            Row(modifier = Modifier.fillMaxWidth()) {
+                HomeCard(
+                    item = items[0],
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        navController.navigate(items[0].route)
                     }
-                }
+                )
+
+                HomeCard(
+                    item = items[1],
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        navController.navigate(items[1].route)
+                    }
+                )
+            }
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+                HomeCard(
+                    item = items[2],
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        navController.navigate(items[0].route)
+                    }
+                )
+
+                HomeCard(
+                    item = items[3],
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        navController.navigate(items[1].route)
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun HomeCard(item: HomeItem, onClick: () -> Unit) {
+fun HomeCard(item: HomeItem,modifier: Modifier, onClick: () -> Unit) {
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
             .height(150.dp)
