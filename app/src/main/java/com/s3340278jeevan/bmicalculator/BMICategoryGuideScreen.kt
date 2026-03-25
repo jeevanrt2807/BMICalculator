@@ -1,4 +1,4 @@
-package com.example.bmicalculator
+package com.s3340278jeevan.bmicalculator
 
 
 import androidx.compose.foundation.clickable
@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-// DATA MODEL
 data class BMICategory(
     val title: String,
     val range: String,
@@ -71,7 +70,6 @@ fun BMICategoryScreen(onBack: () -> Unit) {
         )
     )
 
-    // 🔥 SWITCH BETWEEN LIST & DETAIL
     if (selectedCategory == null) {
 
         Scaffold(
@@ -109,7 +107,6 @@ fun BMICategoryScreen(onBack: () -> Unit) {
         }
 
     } else {
-        // DETAIL SCREEN
         CategoryDetailScreen(
             category = selectedCategory!!,
             onBack = { selectedCategory = null }
@@ -195,7 +192,6 @@ fun CategoryDetailScreen(category: BMICategory, onBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            // HEADER CARD
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = category.color.copy(alpha = 0.1f)
@@ -229,13 +225,10 @@ fun CategoryDetailScreen(category: BMICategory, onBack: () -> Unit) {
                 }
             }
 
-            // FOODS
             DetailSection("Recommended Foods 🍎", category.foods)
 
-            // EXERCISES
             DetailSection("Exercises 🏃", category.exercises)
 
-            // TIPS
             Card(shape = MaterialTheme.shapes.large) {
                 Column(modifier = Modifier
                     .fillMaxWidth()

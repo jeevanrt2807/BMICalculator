@@ -1,15 +1,41 @@
-package com.example.bmicalculator
+package com.s3340278jeevan.bmicalculator
 
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +55,8 @@ fun BMICalculatorScreen(onBack: () -> Unit) {
 
     var bmiResult by remember { mutableStateOf("") }
     var bmiCategory by remember { mutableStateOf("") }
+
+    var errorMessage by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -63,7 +91,6 @@ fun BMICalculatorScreen(onBack: () -> Unit) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
-            // HEIGHT
             Card(shape = MaterialTheme.shapes.large) {
                 Column(modifier = Modifier.padding(16.dp)) {
 
@@ -90,7 +117,6 @@ fun BMICalculatorScreen(onBack: () -> Unit) {
                 }
             }
 
-            // WEIGHT + AGE
             Card(shape = MaterialTheme.shapes.large) {
                 Row(
                     modifier = Modifier
@@ -115,7 +141,6 @@ fun BMICalculatorScreen(onBack: () -> Unit) {
                 }
             }
 
-            // GENDER
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.large
@@ -147,28 +172,53 @@ fun BMICalculatorScreen(onBack: () -> Unit) {
                 }
             }
 
-            // BUTTON
+            if (errorMessage.isNotEmpty()) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+            }
+
             Button(
-                onClick = {
-                    val hFeet = feet.toFloatOrNull() ?: 0f
-                    val hInches = inches.toFloatOrNull() ?: 0f
-                    val w = weight.toFloatOrNull() ?: 0f
+                onClick = {     val hFeet = feet.toIntOrNull()
+                    val hInches = inches.toIntOrNull()
+                    val w = weight.toFloatOrNull()
+                    val a = age.toIntOrNull()
+
+                    if (hFeet == null || hFeet !in 1..8) {
+                        errorMessage = "Feet should be between 1 and 8"
+                        return@Button
+                    }
+
+                    if (hInches == null || hInches !in 0..11) {
+                        errorMessage = "Inches should be between 0 and 11"
+                        return@Button
+                    }
+
+                    if (w == null || w !in 50f..500f) {
+                        errorMessage = "Weight should be between 50 and 500 lbs"
+                        return@Button
+                    }
+
+                    if (a == null || a !in 5..120) {
+                        errorMessage = "Age should be between 5 and 120"
+                        return@Button
+                    }
+
+                    errorMessage = ""
 
                     val totalInches = (hFeet * 12) + hInches
+                    val bmi = (w / totalInches.toFloat().pow(2)) * 703
 
-                    if (totalInches > 0 && w > 0) {
-                        val bmi = (w / totalInches.pow(2)) * 703
-                        bmiResult = String.format("%.2f", bmi)
+                    bmiResult = String.format("%.2f", bmi)
 
-                        bmiCategory = when {
-                            bmi < 18.5 -> "Underweight"
-                            bmi < 24.9 -> "Normal"
-                            bmi < 29.9 -> "Overweight"
-                            else -> "Obese"
-                        }
-                    } else {
-                        bmiResult = "Invalid"
-                        bmiCategory = ""
+                    bmiCategory = when {
+                        bmi < 18.5 -> "Underweight"
+                        bmi < 24.9 -> "Normal"
+                        bmi < 29.9 -> "Overweight"
+                        else -> "Obese"
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -177,7 +227,6 @@ fun BMICalculatorScreen(onBack: () -> Unit) {
                 Text("Calculate BMI")
             }
 
-            // RESULT CARD
             if (bmiResult.isNotEmpty()) {
 
                 val (color, icon) = when (bmiCategory) {

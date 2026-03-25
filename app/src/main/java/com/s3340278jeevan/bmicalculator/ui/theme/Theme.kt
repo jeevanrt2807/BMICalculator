@@ -1,6 +1,5 @@
-package com.example.bmicalculator.ui.theme
+package com.s3340278jeevan.bmicalculator.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

@@ -1,4 +1,4 @@
-package com.example.bmicalculator
+package com.s3340278jeevan.bmicalculator
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -34,6 +34,9 @@ import androidx.navigation.compose.rememberNavController
 
 
 sealed class Screen(val route: String) {
+    object Splash : Screen("splash")
+    object Login : Screen("login")
+    object Register : Screen("register")
     object Home : Screen("home")
     object BMICalculator : Screen("bmi_calculator")
     object BMICategory : Screen("bmi_category")
@@ -41,37 +44,6 @@ sealed class Screen(val route: String) {
     object About : Screen("about")
 }
 
-@Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
-
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Home.route
-    ) {
-        composable(Screen.Home.route) {
-            HomeScreen(navController)
-        }
-        composable(Screen.BMICalculator.route) {
-            BMICalculatorScreen(onBack = {
-                navController.popBackStack()
-            })
-        }
-        composable(Screen.BMICategory.route) {
-            BMICategoryScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-        composable(Screen.Profile.route) {
-            ProfileScreen()
-        }
-        composable(Screen.About.route) {
-            AboutScreen()
-        }
-    }
-}
 
 data class HomeItem(
     val title: String,
@@ -93,7 +65,7 @@ fun HomeScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("BMI Health App") },
+                title = { Text("BMI Calculator App") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF1976D2),
                     titleContentColor = Color.White,
@@ -188,16 +160,5 @@ fun HomeCard(item: HomeItem,modifier: Modifier, onClick: () -> Unit) {
 
 
 
-@Composable
-fun ProfileScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Profile Screen")
-    }
-}
 
-@Composable
-fun AboutScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("About Us Screen")
-    }
-}
+

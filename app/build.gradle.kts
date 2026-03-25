@@ -3,10 +3,12 @@ import org.gradle.kotlin.dsl.implementation
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
+
 }
 
 android {
-    namespace = "com.example.bmicalculator"
+    namespace = "com.s3340278jeevan.bmicalculator"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -14,7 +16,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.bmicalculator"
+        applicationId = "com.s3340278jeevan.bmicalculator"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -54,6 +56,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.database.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

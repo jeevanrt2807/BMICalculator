@@ -1,4 +1,4 @@
-package com.example.bmicalculator.ui.theme
+package com.s3340278jeevan.bmicalculator.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

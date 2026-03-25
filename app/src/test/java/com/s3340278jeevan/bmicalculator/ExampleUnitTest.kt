@@ -1,4 +1,4 @@
-package com.example.bmicalculator
+package com.s3340278jeevan.bmicalculator
 
 import org.junit.Test
 

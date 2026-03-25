@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "835146130414",
+    "project_id": "bmicalculatorapp-f775c",
+    "storage_bucket": "bmicalculatorapp-f775c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835146130414:android:de58b23ad00cffe67ee4ff",
+        "android_client_info": {
+          "package_name": "com.s3340278jeevan.bmicalculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRnHkzBDnUuprYMEbYc63mASnk9SLzvfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
